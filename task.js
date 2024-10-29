@@ -40,10 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Display a welcome message with the user's name
-    const taskHeader = document.querySelector(".task-header h2");
-    taskHeader.innerText = `Hello, ${userName}! See the tasks available`;
-
     // Function to add points to the balance and update localStorage
     function addPointsToBalance(points) {
         // Retrieve balance from localStorage or set to initial value
