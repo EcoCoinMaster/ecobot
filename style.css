@@ -1,0 +1,182 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    margin-left: auto;
+}
+
+/* Remove underline from the link directly */
+header a {
+    text-decoration: none; /* Remove underline from link */
+    color: white; /* Optional: Set text color */
+}
+
+header .logo {
+    width: 40px;
+    margin-left: 5px;
+}
+
+/* Remaining CSS ... */
+
+.telegram
+{
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+    margin-top: px;
+}
+
+main .lion-icon {
+    width: 230px;
+    margin: 20px 0;
+}
+
+.balance {
+    font-size: 2em;
+}
+
+.balance p {
+    margin-top: -20px;
+}
+
+.balance span {
+    font-size: 23px;
+    color: #b3b3b3;
+    
+}
+
+.follow-section {
+    overflow-x: scroll; /* Enable horizontal scrolling */
+    display: flex;
+    margin: 70px 0;
+    scroll-snap-type: x mandatory; /* Enable snap scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+}
+
+.task-slider {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.task-box {
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 20px;
+    height: 85px;
+    width: 85%; /* Make the box wider */
+    padding: 15px;
+    margin-bottom: 45px;
+    text-align: left; /* Align text to the left for a cleaner look */
+    flex: 0 0 85%; /* Control the width to ensure it fills most of the screen */
+    cursor: pointer;
+    position: relative;
+    scroll-snap-align: center; /* Center-align when scrolling stops */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+    display: flex;
+    justify-content: space-between; /* Space between text and button */
+    align-items: center;
+    gap: 10px;
+    
+}
+
+.task-box p {
+    font-weight: bold;
+    font-style:inherit;
+    font-size:  20px; /* Adjust font size for a more balanced look */
+    margin: 0;
+    color: #000000; /* Darker color for the title */
+}
+
+.task-box button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1em; /* Increase font size for emphasis */
+    font-weight: bold;
+    min-width: 90px;
+    text-align: center;
+    transition: background-color 0.3s; /* Add a hover effect */
+}
+
+.task-box button:hover {
+    background-color: #444; /* Darken button on hover */
+}
+
+.task-box .followed {
+    background-color: #666;
+}
+
+/* Taskbar styling */
+.taskbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 7px;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    max-width: 400px;
+}
+
+.taskbar .nav-icon {
+    width: 40px;
+    height: 40px;
+}
+/* Button styling for the "Followed" state */
+.task-box .follow-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    min-width: 90px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+/* Style when button is in the "Followed" state */
+.task-box .follow-btn.followed {
+    background-color: #666; /* Gray color to indicate followed */
+}

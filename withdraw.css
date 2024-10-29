@@ -1,0 +1,66 @@
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #000000; /* Use your preferred color */
+    color: white;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.withdraw-container {
+    width: 80%;
+    background: linear-gradient(90deg, #000000, #2f2f33);
+    border-radius: 20px;
+    margin-top: 30px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.withdraw-header {
+    text-align: center;
+}
+
+.mine-icon {
+    width: 250px; /* Adjust the size as needed */
+    height: 250px; /* Adjust the size as needed */
+    margin: 20px 0; /* Add spacing above and below the image */
+}
+
+.coming-soon {
+    font-size: 24px;
+    margin-top: 20px; /* Adjust margin for spacing */
+}
+.taskbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 7px;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    max-width: 400px;
+}
+
+.taskbar .nav-icon {
+    width: 40px;
+    height: 40px;
+}
+
+
+
