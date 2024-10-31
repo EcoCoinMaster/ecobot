@@ -36,6 +36,22 @@ header h1 {
 .header-right {
     margin-left: auto;
 }
+.spin{
+    height: 80px;
+    width: 85px;
+    margin-bottom: -50px;
+    margin-left:-250px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 
 /* Remove underline from the link directly */
 header a {
@@ -59,7 +75,7 @@ header .logo {
 }
 
 main .lion-icon {
-    width: 230px;
+    width: 200px;
     margin: 20px 0;
 }
 
