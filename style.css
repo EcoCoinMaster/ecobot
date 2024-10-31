@@ -162,12 +162,12 @@ main .lion-icon {
 .taskbar {
     display: flex;
     justify-content: space-around;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 20px;
-    padding: 7px;
+    padding: 10px;
     position: fixed;
-    bottom: 10px;
-    left: 50%;
+    margin-top: 580px; /* Raised position */
+    left: 47%;
     transform: translateX(-50%);
     width: 300px;
     max-width: 400px;
