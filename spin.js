@@ -4,18 +4,18 @@ const messageDisplay = document.querySelector('.message');
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 
-const baseOptions = [0, 2000, 500, 5000, 100, 'Another\nChance']; // Base options for the wheel
-let options = []; // This will hold the current shuffled options
+const baseOptions = [0, 2000, 500, 5000, 100, 'Another\nChance'];
+let options = [];
 const numSegments = baseOptions.length;
 const segmentAngle = (2 * Math.PI) / numSegments;
-let rotationAngle = 0;  // Current rotation angle
+let rotationAngle = 0;
 
 // Function to shuffle the options array
 function shuffleOptions() {
-    options = [...baseOptions]; // Copy base options
+    options = [...baseOptions];
     for (let i = options.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]]; // Swap elements
+        [options[i], options[j]] = [options[j], options[i]];
     }
 }
 
@@ -55,57 +55,69 @@ function drawWheel() {
 // Draw pointer at the center pointing to the left with margin
 function drawPointer() {
     ctx.beginPath();
-    ctx.moveTo(195, 190); // Adjusted base slightly to center
-    ctx.lineTo(225, 200); // Right point of the pointer (flipped horizontally)
-    ctx.lineTo(195, 210); // Bottom point of the pointer
-    ctx.lineTo(195, 200); // Back to the base
+    ctx.moveTo(195, 190);
+    ctx.lineTo(225, 200);
+    ctx.lineTo(195, 210);
+    ctx.lineTo(195, 200);
     ctx.closePath();
-    ctx.fillStyle = '#FF0000'; // Pointer color
+    ctx.fillStyle = '#FF0000';
     ctx.fill();
+}
+
+// Function to update the time remaining message
+function updateTimeRemaining() {
+    const lastSpinTime = localStorage.getItem('lastSpinTime');
+    const currentTime = Date.now();
+    const sixHours = 6 * 60 * 60 * 1000;
+
+    if (lastSpinTime) {
+        const timeElapsed = currentTime - lastSpinTime;
+        const timeRemaining = sixHours - timeElapsed;
+
+        if (timeRemaining > 0) {
+            const hoursRemaining = Math.floor(timeRemaining / (60 * 60 * 1000));
+            messageDisplay.textContent = `Come back after ${hoursRemaining} hr${hoursRemaining > 1 ? 's' : ''}.`;
+            spinButton.disabled = true;
+        } else {
+            messageDisplay.textContent = "You can spin now!";
+            spinButton.disabled = false;
+        }
+    }
 }
 
 // Spin wheel animation
 function spinWheel() {
     const lastSpinTime = localStorage.getItem('lastSpinTime');
     const currentTime = Date.now();
-    const sixHours = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+    const sixHours = 6 * 60 * 60 * 1000;
 
-    // Check if the user can spin again
     if (lastSpinTime && currentTime - lastSpinTime < sixHours) {
-        messageDisplay.textContent = "Come back after 6 hours.";
-        spinButton.disabled = true;
+        updateTimeRemaining();
         return;
     }
 
-    // Shuffle the options before spinning
     shuffleOptions();
-
-    // Store the current time as the last spin time
     localStorage.setItem('lastSpinTime', currentTime);
     messageDisplay.textContent = "Spinning...";
+    spinButton.disabled = true;
 
-    const spinDuration = 3000; // Total spin duration in milliseconds
-    let spinVelocity = Math.random() * 10 + 25; // Initial speed for fast spin
-    const decelerationFactor = 0.98; // Factor to slow down the spin
-    const minVelocity = 1; // Minimum velocity to stop spinning
-
+    const spinDuration = 3000;
+    let spinVelocity = Math.random() * 10 + 25;
+    const decelerationFactor = 0.98;
+    const minVelocity = 1;
     let startTime = null;
 
     function animateSpin(timestamp) {
         if (!startTime) startTime = timestamp;
         const elapsed = timestamp - startTime;
 
-        // Calculate the current spin velocity
         if (elapsed < spinDuration) {
-            // Gradually reduce the speed
             spinVelocity *= decelerationFactor;
-            if (spinVelocity < minVelocity) spinVelocity = minVelocity; // Ensure it doesn't go below the minimum
+            if (spinVelocity < minVelocity) spinVelocity = minVelocity;
 
-            // Update rotation angle based on current velocity
-            rotationAngle += spinVelocity / 100; // Adjust the divisor to control spin speed
-            rotationAngle %= 2 * Math.PI; // Keep angle within 0 to 2π
+            rotationAngle += spinVelocity / 100;
+            rotationAngle %= 2 * Math.PI;
 
-            // Clear and redraw the canvas for each frame
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(200, 200);
@@ -115,10 +127,8 @@ function spinWheel() {
             ctx.restore();
             drawPointer();
 
-            // Continue the animation
             requestAnimationFrame(animateSpin);
         } else {
-            // Final spin
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(200, 200);
@@ -131,7 +141,6 @@ function spinWheel() {
         }
     }
 
-    // Start the animation
     requestAnimationFrame(animateSpin);
 }
 
@@ -139,30 +148,32 @@ function spinWheel() {
 function determineWinningSegment(angle) {
     const normalizedAngle = (2 * Math.PI - (angle % (2 * Math.PI))) % (2 * Math.PI);
     let segmentIndex = Math.floor(normalizedAngle / segmentAngle);
-    
+
     const winningOption = options[segmentIndex];
     resultDisplay.textContent = `You won: ${winningOption}`;
-    
+
     if (winningOption === 'Another\nChance') {
         messageDisplay.textContent = "Spin again!";
-        spinButton.disabled = false; // Allow spinning again
+        spinButton.disabled = false;
     } else {
-        messageDisplay.textContent = "Come back after 6 hours.";
-        spinButton.disabled = true; // Disable spin button until 6 hours are up
+        updateTimeRemaining();
     }
 
-    // Store the winning amount in local storage
-    if (typeof winningOption === 'number') { // Ensure it's a numeric win
+    if (typeof winningOption === 'number') {
         let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
-        currentBalance += winningOption; // Add the winning amount
-        localStorage.setItem('balance', currentBalance); // Update local storage
+        currentBalance += winningOption;
+        localStorage.setItem('balance', currentBalance);
     }
 }
 
 // Initial drawing
-shuffleOptions(); // Shuffle options at the start
+shuffleOptions();
 drawWheel();
 drawPointer();
+updateTimeRemaining();
+
+// Check time remaining every hour
+setInterval(updateTimeRemaining, 60 * 60 * 1000);
 
 // Spin button event listener
 spinButton.addEventListener('click', spinWheel);
